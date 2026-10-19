@@ -55,17 +55,11 @@
       pauseGame();
     }
     function notifyGameEnd(){
-      if(typeof window.gameEnd==='function'){
-        window.gameEnd();
-      }
+      window.gameEnd && window.gameEnd();
     }
     function triggerInstall(){
       notifyGameEnd();
-      if(typeof window.install==='function'){
-        window.install();
-      }else{
-        window.location.href='https://play.google.com/store/apps/details?id=com.cinecaju.app';
-      }
+      window.install && window.install();
     }
 
     const video=document.getElementById('video'),withdraw=document.getElementById('withdraw'),topBalance=document.getElementById('topBalance'),pixSheet=document.getElementById('pixSheet'),formAmount=document.getElementById('formAmount'),successAmount=document.getElementById('successAmount'),pixForm=document.getElementById('pixForm'),formView=document.getElementById('formView'),successView=document.getElementById('successView'),keyType=document.getElementById('keyType'),keyLabel=document.getElementById('keyLabel'),pixKey=document.getElementById('pixKey');
@@ -98,7 +92,6 @@
     video.addEventListener('seeked',()=>syncCta(video.currentTime||0));
     video.addEventListener('pause',()=>ctaLayer.classList.add('is-paused'));
     video.addEventListener('play',()=>ctaLayer.classList.remove('is-paused'));
-    const STORE_URL='https://play.google.com/store/apps/details?id=com.cinecaju.app';
     const brl=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'});let lockedAmount=130.93;
     function balanceAt(time){const p=Math.min(1,Math.max(0,time)/6.2);return 130.93+(224.31-130.93)*p}
     function sync(){if(!pixSheet.classList.contains('open')){const t=video.currentTime||0;lockedAmount=balanceAt(t);topBalance.textContent=brl.format(lockedAmount);}requestAnimationFrame(sync)}
